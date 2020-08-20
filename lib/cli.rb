@@ -5,9 +5,25 @@ class Cli
         @user = nil
     end
 
-    def welcome
+    def banner
         system("clear")
-        puts "Welcome to hiking trails app! What is your name?"
+        box = TTY::Box.frame(width:150, height: 11, border: :thick, align: :left) do |font|
+        "
+                                                                                                                                                   
+           _|    _|  _|  _|        _|                          _|_|_|_|_|                      _|  _|                _|    _|    _|_|_|    _|_|    
+           _|    _|      _|  _|        _|_|_|      _|_|_|          _|      _|  _|_|    _|_|_|      _|    _|_|_|      _|    _|  _|        _|    _|  
+           _|_|_|_|  _|  _|_|      _|  _|    _|  _|    _|          _|      _|_|      _|    _|  _|  _|  _|_|          _|    _|    _|_|    _|_|_|_|  
+           _|    _|  _|  _|  _|    _|  _|    _|  _|    _|          _|      _|        _|    _|  _|  _|      _|_|      _|    _|        _|  _|    _|  
+           _|    _|  _|  _|    _|  _|  _|    _|    _|_|_|          _|      _|          _|_|_|  _|  _|  _|_|_|          _|_|    _|_|_|    _|    _|  
+                                                       _|                                                                                          
+                                                   _|_|                                                                                            
+        "
+        end 
+        print box
+    end  
+
+    def welcome
+        puts "Welcome to Hiking Trails app! What is your name?"
         @user = gets.strip
         
         prompt = TTY::Prompt.new
