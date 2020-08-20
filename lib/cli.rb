@@ -39,7 +39,7 @@ class Cli
         else 
             
             puts "This trail is rated a #{trail_name.difficulty} in difficulty."
-            puts "This trail is #{trail_name.length} miles in length."
+            puts "This trail is #{trail_name.length} miles in length"
             puts "It has #{trail_name.elevation} in elevation gain."
             puts "It a #{trail_name.route}."
             
