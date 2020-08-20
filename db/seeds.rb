@@ -3,11 +3,11 @@ Hiker.destroy_all
 Trail.destroy_all
 
 trail1 = Trail.create(name: "Grand Canyon", location: "Arizona", difficulty: 9, length: 10, elevation: 5000, route: "Loop")
-trail2 = Trail.create(name: "Old Faithful", location: "Wyoming", difficulty: 6, length: 5, elevation: 2000, route: "out-and-back")
+trail2 = Trail.create(name: "Old Faithful", location: "New Mexico", difficulty: 6, length: 5, elevation: 2000, route: "out-and-back")
 trail3 = Trail.create(name: "Black Canyon", location: "Colorado", difficulty: 7, length: 2, elevation: 1000, route: "Loop")
 trail4 = Trail.create(name: "Mt. Evans", location: "Colorado", difficulty: 9, length: 3, elevation: 5000, route: "Loop")
 trail5 = Trail.create(name: "Longs Peak", location: "Colorado", difficulty: 6, length: 5, elevation: 2000, route: "out-and-back")
-trail6 = Trail.create(name: "Mammoth Falls", location: "Wyoming", difficulty: 8, length: 5, elevation: 1000, route: "Loop")
+trail6 = Trail.create(name: "Mammoth Falls", location: "Utah", difficulty: 8, length: 5, elevation: 1000, route: "Loop")
 
 hiker1 = Hiker.create(name: "Bob", age: 45, experience: "novice")
 hiker2 = Hiker.create(name: "Sam", age: 15, experience: "expert")

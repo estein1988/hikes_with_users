@@ -23,62 +23,53 @@ class Cli
     end  
 
     def welcome
-        puts "Welcome to Hiking Trails app! What is your name?"
+        puts "Welcome to Hiking Trails USA! What is your name?"
         @user = gets.strip
-        
         prompt = TTY::Prompt.new
-        answer = prompt.select("Hello #{@user} Would you like to get a list of hikes?") do |menu|
-            menu.choice 'Yes'
-            menu.choice 'No'
+        answer = prompt.select("Hello #{@user}, what state are you hiking in? ") do |menu|
+            menu.choice 'Arizona'
+            menu.choice 'Colorado'
+            menu.choice 'New Mexico'
+            menu.choice 'Utah'
+            menu.choice 'Exit'
         end 
 
-        if answer == 'Yes'
-            prompt = TTY::Prompt.new 
-            trails = Trail.list_trails
-            prompt.select("These are the hikes: ", trails)
-            list_trails
-        else answer == 'No'
+        if answer == 'Exit'
             puts "Okay, happy trails!"
-        end
+        else
+            prompt = TTY::Prompt.new 
+            trails = Trail.by_state(answer)
+            trail_answer = prompt.select("These are the hikes in your state: ", trails)
+            list_trails(trail_answer)
+        end 
     end
 
-    def list_trails
-        puts "Great choice. Enter the name in: "
-        answer = gets.strip
-        trail_name = Trail.find_by name: answer
-        
-        if !trail_name
+    def list_trails(trail_answer)
+        trail_name = Trail.find_by name: trail_answer
+            
+        puts "#{trail_name.name} is rated a #{trail_name.difficulty} in difficulty.\n\n"
+        puts "#{trail_name.name} is #{trail_name.length} miles in length.\n\n"
+        puts "#{trail_name.name} has #{trail_name.elevation} in elevation gain.\n\n"
+        puts "#{trail_name.name} is a #{trail_name.route}.\n\n"
+            
+        reviews = Review.where(trail: trail_name)
+        reviews.map do |review|
+            puts "This hike was last rated a #{review.rating}."
+        end
+        prompt = TTY::Prompt.new
+        answer = prompt.select("Are you sure? ") do |menu|
+            menu.choice 'Yes'
+            menu.choice 'No'
+        end
+
+        if answer == 'Yes'
+            puts "Okay, Happy Trails!"
+        else answer == 'No'
             prompt = TTY::Prompt.new 
             trails = Trail.list_trails
-            prompt.select("Please select a valid option: ", trails)
-            list_trails 
-        else 
-            
-            puts "This trail is rated a #{trail_name.difficulty} in difficulty."
-            puts "This trail is #{trail_name.length} miles in length"
-            puts "It has #{trail_name.elevation} in elevation gain."
-            puts "It a #{trail_name.route}."
-            
-            reviews = Review.where(trail: trail_name)
-            reviews.map do |review|
-                puts "This hike was last rated a #{review.rating}."
-            end
-            prompt = TTY::Prompt.new
-            answer = prompt.select("Are you sure? ") do |menu|
-                menu.choice 'Yes'
-                menu.choice 'No'
-            end
-
-            if answer == 'Yes'
-                puts "Okay, happy trails!"
-            else answer == 'No'
-                prompt = TTY::Prompt.new 
-                trails = Trail.list_trails
-                prompt.select("Okay, enter a different selection: ", trails)
-                list_trails 
-            end
-
-        end 
+            prompt.select("Okay, here are some more selections: ", trails)
+            list_trails(trail_answer)
+        end
     end
 
 end
