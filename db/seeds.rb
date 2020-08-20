@@ -1,3 +1,7 @@
+Review.destroy_all
+Hiker.destroy_all
+Trail.destroy_all
+
 trail1 = Trail.create(name: "Full Grand Canyon hike", location: "Arizona", difficulty: 9, length: 10, elevation: 5000, route: "Loop")
 trail2 = Trail.create(name: "Old Faithful", location: "Wyoming", difficulty: 6, length: 5, elevation: 2000, route: "out-and-back")
 trail3 = Trail.create(name: "Black Canyon", location: "Colorado", difficulty: 2, length: 4, elevation: 1000, route: "Loop")

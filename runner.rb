@@ -1,8 +1,7 @@
 require_relative 'config/environment'
+require "tty-prompt"
 
-binding.pry
+#binding.pry
 
-#Cli.new.start_game
-
-
-
+cli = Cli.new
+cli.welcome
