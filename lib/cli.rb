@@ -37,10 +37,16 @@ class Cli
             prompt.select("Please select a valid option: ", trails)
             list_trails 
         else 
+            
+            puts "This trail is rated a #{trail_name.difficulty} in difficulty."
+            puts "This trail is #{trail_name.length} miles in length."
+            puts "It has #{trail_name.elevation} in elevation gain."
+            puts "It a #{trail_name.route}."
+            
             reviews = Review.where(trail: trail_name)
             reviews.map do |review|
                 puts "This hike was last rated a #{review.rating}."
-            end 
+            end
             prompt = TTY::Prompt.new
             answer = prompt.select("Are you sure? ") do |menu|
                 menu.choice 'Yes'
