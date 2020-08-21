@@ -1,7 +1,7 @@
 require_relative 'config/environment'
 require "tty-prompt"
 
-#binding.pry
+# binding.pry
 
 cli = Cli.new
 cli.banner
