@@ -11,11 +11,11 @@ Happy Trails USA is a CLI application that allows users to select which state th
 
 
 ### Technologies
-*Ruby - version 2.6.1
-*ActiveRecord - version 6.0
-*Sinatra-activerecord - version 2.0
-*Rake - version 13.0
-*SQLite 3 - version 1.4
+* Ruby - version 2.6.1
+* ActiveRecord - version 6.0
+* Sinatra-activerecord - version 2.0
+* Rake - version 13.0
+* SQLite 3 - version 1.4
 
 ### Setup
 
@@ -38,9 +38,8 @@ def state_selection
     menu.choice 'New Mexico'
     menu.choice 'Utah'
     menu.choice 'Exit'
-end 
-```
-```
+end
+
 def trail_review(trail)
   reviews = Review.all.select do |review_instance|
     review_instance.trail == trail
@@ -49,7 +48,6 @@ def trail_review(trail)
     puts review.review
   end    
 end
-```
 
 def options 
   prompt = TTY::Prompt.new 
@@ -59,21 +57,21 @@ def options
 end       
 ```
 ### Features
-*App greets user with their name
-*User can select which state they are in
-*Based on state selection, user see available hike options in their state
-*After selecting a hike, trail information and trail ratings are given
-*User can either view reviews for that hike or pick a different hike
-*After reading the reviews, the user is asked if they want to leave a new review
-*If user leaves a new review, their basic information is asked to be provided and they can enter their comments and a rating
-*User is given final option to delete their review, return to trail selections, or exit and go hiking!
-*Most menu options allow the user to exit the app if they wish
+* App greets user with their name
+* User can select which state they are in
+* Based on state selection, user see available hike options in their state
+* After selecting a hike, trail information and trail ratings are given
+* User can either view reviews for that hike or pick a different hike
+* After reading the reviews, the user is asked if they want to leave a new review
+* If user leaves a new review, their basic information is asked to be provided and they can enter their comments and a rating
+* User is given final option to delete their review, return to trail selections, or exit and go hiking!
+* Most menu options allow the user to exit the app if they wish
 
 _Additional Options for Features_
-*Include APIs for trails around all of the U.S.
-*Integrate user's review entries to Review class, migration table and schema
-*Add photos for hikes or allow the user to upload their own photos from the hike
-*Code can always be refactored!
+* Include APIs for trails around all of the U.S.
+* Integrate user's review entries to Review class, migration table and schema
+* Add photos for hikes or allow the user to upload their own photos from the hike
+* Code can always be refactored!
 
 ### Status
 App is fully functioning with option to grow with additional features
