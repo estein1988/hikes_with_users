@@ -14,3 +14,6 @@ gem "require_all", "~> 3.0"
 gem 'tty-prompt'
 gem 'tty-box'
 gem 'tty-spinner'
+gem 'colorize'
+gem 'icloud'
+gem 'rainbow'
