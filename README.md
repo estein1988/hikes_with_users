@@ -1,71 +1,84 @@
-# Mod 1 ActiveRecord Starter Repo
+# Happy Trails USA!
 
-In `config/database.yml`, you can change the name of the database from `db/cats.sqlite3` to whatever reflects your project. For example: `db/notes.sqlite3`. Doesn't really matter what you call the db. 
+Your one-stop shop to find your favorite hike in the grand ole' USA!
+
+## General Info
+
+Happy Trails USA is a CLI application that allows users to select which state they are in, view available hiking options with their state, access reviews for their hike selections and leave a review after they went on the hike. 
+
+### Intro Video
 
 
 
-## ActiveRecord Methods
-These common ActiveRecord methods will help you interact with your database. Please refer to the ActiveRecord
-docs for what they do and how to use them. (If the docs talk about Rails, that is ok! ActiveRecord works very
- similar with or without Rails.)
+### Technologies
+*Ruby - version 2.6.1
+*ActiveRecord - version 6.0
+*Sinatra-activerecord - version 2.0
+*Rake - version 13.0
+*SQLite 3 - version 1.4
+
+### Setup
+
+To run Happy Trails USA, install it locally by cloning this GitHub repository and run:
 ```
-  .create (.new, .save)
-  .all
-  .count
-  .find
-  .find_by
-  .where
+bundle install
+rake db:migrate
+rake db:seed
+ruby runner.rb
 ```
 
-#### Notes
-
-*Remember*, any model that will have a corresponding table in the database needs to inherit from `ActiveRecord::Base`
-ex:
+### Code Examples
 ```
-class Cat < ActiveRecord::Base
-  # customer methods defined here
+def state_selection
+  system `say "Hello #{@user}, it is nice that you are getting outside to go hiking"` 
+  prompt = TTY::Prompt.new
+  @answer = prompt.select("What state are you hiking in?\n\n ".green.italic) do |menu|
+    menu.choice 'Arizona'
+    menu.choice 'Colorado'
+    menu.choice 'New Mexico'
+    menu.choice 'Utah'
+    menu.choice 'Exit'
+end 
+```
+```
+def trail_review(trail)
+  reviews = Review.all.select do |review_instance|
+    review_instance.trail == trail
+  end
+  reviews.map do |review|
+    puts review.review
+  end    
 end
 ```
 
-- To view database, you can run `sqlite3 db/cats.db`, then can run `.schema` or `.tables` and can run any SQL commands. (Don't need to do this anymore though! ActiveRecord gives us a schema file!)
-
-
-### Steps to setup Ruby app with activerecord
-(New for ActiveRecord 6.0)
-
-
-## The following steps are already done for you in this boiler plate repo. 
-## The steps below are provided to you as a reference only. 
-## You're not expected to memorize this (please don't).
-
-
-1. In root of project, run `bundle init`
-1. Add gems: 
-  `bundle add activerecord pry sinatra, sinatra-activerecord rake sqlite3 require_all`
-  run `bundle install`
-1. mkdir config and lib 
-1. mkdir lib/models
-1. touch config/environment.rb config/database.yml
-1. Create your model files and models (make sure to have your models inherit from ActiveRecord::Base)
-1. In config/environment.rb:
+def options 
+  prompt = TTY::Prompt.new 
+  trails_in_state = Trail.by_state(@answer)
+  trail_answer = prompt.select("Okay, here are some trail options, press enter to pick a trail:\n\n ", trails_in_state)
+  list_trails(trail_answer)
+end       
 ```
-  require 'bundler/setup'
-  Bundler.require
+### Features
+*App greets user with their name
+*User can select which state they are in
+*Based on state selection, user see available hike options in their state
+*After selecting a hike, trail information and trail ratings are given
+*User can either view reviews for that hike or pick a different hike
+*After reading the reviews, the user is asked if they want to leave a new review
+*If user leaves a new review, their basic information is asked to be provided and they can enter their comments and a rating
+*User is given final option to delete their review, return to trail selections, or exit and go hiking!
+*Most menu options allow the user to exit the app if they wish
 
-  require_all 'lib'
-```
-1. In config/database.yml:
-  ```
-  development:
-    adapter: sqlite3
-    database: db/cats.sqlite3
-  ```
-1. Touch Rakefile - require ‘config/environment.rb’ and require_relative ‘sinatra/activerecord/rake’ 
-1. Run rake -T to make sure we have access to raketasks
-1. Run `rake db:create_migration NAME=create_cats_table` (will create the db folder if it doesn’t already exist) and will add the migration file to db/migration
-1. Write migration file, then run `rake db:migrate`
-1. Then can see schema in file structure, can also drop into sqlite3 cats.db to see the tables and schema, but don’t really need to do that anymore. *Review rollback here*
-1. Create seeds in db/seeds.rb and run `rake db:seed`
-1. Now can put a pry in environment.rb to run <ModelName>.all and see your seeds.
+_Additional Options for Features_
+*Include APIs for trails around all of the U.S.
+*Integrate user's review entries to Review class, migration table and schema
+*Add photos for hikes or allow the user to upload their own photos from the hike
+*Code can always be refactored!
 
-Make sure your models inherit from `ActiveRecord::Base`
+### Status
+App is fully functioning with option to grow with additional features
+
+### Contact
+Created by **[Elliott Stein](https://www.linkedin.com/in/steinelliott/)** and **[Sanjeev Yogi](https://www.linkedin.com/in/sanjeevyogi/)**
+Please feel free to contact us!! 
+
