@@ -26,9 +26,33 @@ class Cli
     def welcome
         puts "Welcome to Happy Trails USA! What is your name?\n\n".green.italic
         system `say "Welcome to the Happy Trails USA app! Please enter your name: "`
-
         @user = gets.strip
+        system `say "Hello #{@user}, it is nice that you are getting outside to go hiking"`
         state_selection
+    end
+
+    def state_selection 
+        prompt = TTY::Prompt.new
+        @answer = prompt.select("What state are you hiking in?\n\n ".green.italic) do |menu|
+            menu.choice 'Arizona'
+            menu.choice 'Colorado'
+            menu.choice 'New Mexico'
+            menu.choice 'Utah'
+            menu.choice 'Exit'
+        end 
+        if @answer == 'Exit'
+    
+            puts "🌲🌲🌲🌲🌲     Okay, Happy Trails!     🌲🌲🌲🌲🌲     ".green.italic
+        else
+            options
+        end
+    end
+
+    def options 
+        prompt = TTY::Prompt.new 
+        trails_in_state = Trail.by_state(@answer)
+        trail_answer = prompt.select("Okay, here are some trail options, press enter to pick a trail:\n\n ", trails_in_state)
+        list_trails(trail_answer)
     end
 
     def list_trails(trail_answer)
@@ -39,8 +63,8 @@ class Cli
         reviews = Review.where(trail: trail_instance)
         average_rating = reviews.map do |review|
             review.rating   
-        end.reduce(0) {|sum, rating| sum + rating}/(reviews.count).to_f
-        puts "#{trail_instance.name}'s average rating is #{average_rating}. It has #{reviews.count} submitted.\n\n".cyan.bold
+        end.reduce(0) {|sum, rating| sum + rating}/((reviews.count).to_f).round(2)
+        puts "#{trail_instance.name}'s average rating is #{average_rating}. It has #{reviews.count} reviews submitted.\n\n".cyan.bold
 
         prompt = TTY::Prompt.new
         answer_1 = prompt.select("Do you want to view reviews for this trail?\n\n".green.italic) do |menu|
@@ -94,7 +118,7 @@ class Cli
                     puts "Your review is deleted!".green.italic
 
                     prompt = TTY::Prompt.new
-                    option_1 = prompt.select("Please select the option!".greenitalic) do |menu|
+                    option_1 = prompt.select("Please select the option!".green.italic) do |menu|
                         menu.choice 'Go back to state selection!'
                         menu.choice 'See more options!'
                         menu.choice 'Exit'
@@ -146,7 +170,6 @@ class Cli
         end
     end
 
-
     def trail_review(trail)
         reviews = Review.all.select do |review_instance|
             review_instance.trail == trail
@@ -154,32 +177,6 @@ class Cli
         reviews.map do |review|
            puts review.review
         end    
-    end
-
-    def options 
-        prompt = TTY::Prompt.new 
-        trails_in_state = Trail.by_state(@answer)
-        trail_answer = prompt.select("Okay, here are some trail options, press enter to pick a trail:\n\n ", trails_in_state)
-        list_trails(trail_answer)
-    end
-    
-    def state_selection
-        system `say "Hello #{@user}, it is nice that you are getting outside to go hiking"` 
-        prompt = TTY::Prompt.new
-        @answer = prompt.select("What state are you hiking in?\n\n ".green.italic) do |menu|
-            menu.choice 'Arizona'
-            menu.choice 'Colorado'
-            menu.choice 'New Mexico'
-            menu.choice 'Utah'
-            menu.choice 'Exit'
-        end 
-        if @answer == 'Exit'
-    
-            puts "🌲🌲🌲🌲🌲     Okay, Happy Trails!     🌲🌲🌲🌲🌲     ".green.italic
-
-        else
-            options
-        end
     end
    
 end
