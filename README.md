@@ -6,9 +6,8 @@ Your one-stop shop to find your favorite hike in the grand ole' USA!
 
 Happy Trails USA is a CLI application that allows users to select which state they are in, view available hiking options with their state, access reviews for their hike selections and leave a review after they went on the hike. 
 
-### Intro Video
-
-
+### Walk-through Video
+(https://www.youtube.com/watch?v=hggjgbgYmqQ&feature=youtu.be)
 
 ### Technologies
 * Ruby - version 2.6.1
