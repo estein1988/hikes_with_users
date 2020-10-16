@@ -12,7 +12,6 @@ https://www.youtube.com/watch?v=hggjgbgYmqQ&feature=youtu.be
 ### Technologies
 * Ruby - version 2.6.1
 * ActiveRecord - version 6.0
-* Sinatra-activerecord - version 2.0
 * Rake - version 13.0
 * SQLite 3 - version 1.4
 
